@@ -7,6 +7,7 @@ import sys
 import uvicorn
 from fiaas_logging import init_logging
 
+from console import database
 from console.settings import Settings
 
 LOG = logging.getLogger(__name__)
@@ -31,6 +32,7 @@ def _init_logging(debug):
 def main(debug=False):
     settings = Settings(debug=debug)
     _init_logging(settings.debug)
+    database.init(settings)
     exit_code = 0
     for sig in (signal.SIGTERM, signal.SIGINT):
         signal.signal(sig, signal_handler)

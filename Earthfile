@@ -9,6 +9,9 @@ deps:
 
     WORKDIR /app
 
+    RUN apt-get --yes update && \
+        apt-get --yes install build-essential libpq-dev
+
     RUN pip install poetry
     ENV POETRY_VIRTUALENVS_IN_PROJECT=true
 
