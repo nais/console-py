@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "console"
+version = "0.1.0"
+description = "NAIS management console"
+authors = ["NAIS <aura@nav.no>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fiaas-logging = "^0.1.1"
+pydantic = "^1.9.0"
+fastapi = "^0.74.1"
+uvicorn = "^0.17.5"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6"
+prospector = "^1"
+pytest-cov = "^3"
+pytest-sugar = "^0.9"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
