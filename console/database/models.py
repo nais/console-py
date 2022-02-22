@@ -15,7 +15,7 @@ class Common:
     def __tablename__(cls):
         return cls.__name__.lower() + "s"
 
-    id = Column(UUID, primary_key=True, default=uuid.uuid4)
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     created_at = Column(DateTime, default=datetime.datetime.now)
 
     @declared_attr
@@ -24,7 +24,7 @@ class Common:
 
     @declared_attr
     def created_by(cls):
-        return relationship("User")
+        return relationship("User", primaryjoin=lambda: User.id == cls.created_by_id)
 
     updated_at = Column(DateTime, onupdate=datetime.datetime.now)
 
@@ -34,7 +34,7 @@ class Common:
 
     @declared_attr
     def updated_by(cls):
-        return relationship("User")
+        return relationship("User", primaryjoin=lambda: User.id == cls.updated_by_id)
 
     deleted_at = Column(DateTime)
 
@@ -44,7 +44,7 @@ class Common:
 
     @declared_attr
     def deleted_by(cls):
-        return relationship("User")
+        return relationship("User", primaryjoin=lambda: User.id == cls.deleted_by_id)
 
 
 user_team = Table(
