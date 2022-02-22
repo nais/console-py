@@ -5,27 +5,21 @@ import signal
 import sys
 
 import uvicorn
+from fastapi import FastAPI
 from fiaas_logging import init_logging
 
+from console import api
 from console.settings import Settings
 
 LOG = logging.getLogger(__name__)
 
 
+app = FastAPI(title="NAIS management console")
+app.include_router(api.router, prefix="/api")
+
+
 class ExitOnSignal(Exception):
     pass
-
-
-def signal_handler(signum, frame):
-    raise ExitOnSignal()
-
-
-def _init_logging(debug):
-    if os.getenv("NAIS_CLIENT_ID"):
-        init_logging(format="json", debug=debug)
-    else:
-        init_logging(debug=debug)
-    return logging.getLogger().getEffectiveLevel()
 
 
 def main(debug=False):
@@ -37,7 +31,7 @@ def main(debug=False):
     try:
         LOG.info("Starting console")
         uvicorn.run(
-            "console.api:app",
+            "console.main:app",
             host=settings.bind_address,
             port=settings.port,
             log_config=None,
@@ -50,6 +44,18 @@ def main(debug=False):
         logging.exception(f"unwanted exception: {e}")
         exit_code = 113
     return exit_code
+
+
+def signal_handler(signum, frame):
+    raise ExitOnSignal()
+
+
+def _init_logging(debug):
+    if os.getenv("NAIS_CLIENT_ID"):
+        init_logging(format="json", debug=debug)
+    else:
+        init_logging(debug=debug)
+    return logging.getLogger().getEffectiveLevel()
 
 
 if __name__ == "__main__":

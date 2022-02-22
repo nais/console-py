@@ -4,14 +4,12 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from console.database import models
 from console.api import schemas
 from console.api.deps import get_db
+from console.database import models
 
 router = APIRouter(
-    prefix="/api/v1/teams",
-    tags=["teams"],
-    responses={404: {"description": "Not found"}},
+    responses={404: {"detail": "Not found"}},
 )
 
 

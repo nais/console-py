@@ -1,12 +1,6 @@
-from fastapi import FastAPI
+from fastapi import APIRouter
 
-from console.api import teams
+from . import v1
 
-app = FastAPI()
-
-app.include_router(teams.router)
-
-
-@app.get("/hello")
-def hello():
-    return {"message": "Hello World"}
+router = APIRouter()
+router.include_router(v1.router, prefix="/v1")
