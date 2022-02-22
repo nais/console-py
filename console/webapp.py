@@ -4,5 +4,5 @@ app = FastAPI()
 
 
 @app.get("/hello")
-async def hello():
+def hello():
     return {"message": "Hello World"}

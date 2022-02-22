@@ -12,6 +12,8 @@ ignore-paths:
   - .cachedocs
 
 pep8:
+  disable:
+    - N805
   options:
     max-line-length: 120
 
