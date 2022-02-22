@@ -37,7 +37,7 @@ def main(debug=False):
     try:
         LOG.info("Starting console")
         uvicorn.run(
-            "console.web:app",
+            "console.api:app",
             host=settings.bind_address,
             port=settings.port,
             log_config=None,

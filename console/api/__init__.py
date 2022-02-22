@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from console.web import teams
+from console.api import teams
 
 app = FastAPI()
 
