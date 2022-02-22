@@ -13,6 +13,7 @@ def init():
     engine = create_engine(dsn)
 
     from . import models  # NOQA
+
     Base.metadata.create_all(bind=engine)
 
     return sessionmaker(autocommit=False, autoflush=False, bind=engine)

@@ -1,7 +1,7 @@
 import datetime
 import uuid
 
-from sqlalchemy import Column, DateTime, Text, Table, ForeignKey
+from sqlalchemy import Column, DateTime, ForeignKey, Table, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_mixin, declared_attr, relationship
 
@@ -10,7 +10,6 @@ from . import Base
 
 @declarative_mixin
 class Common:
-
     @declared_attr
     def __tablename__(cls):
         return cls.__name__.lower() + "s"
@@ -48,9 +47,10 @@ class Common:
 
 
 user_team = Table(
-    'association', Base.metadata,
-    Column('user_id', ForeignKey('users.id'), primary_key=True),
-    Column('team_id', ForeignKey('teams.id'), primary_key=True)
+    "association",
+    Base.metadata,
+    Column("user_id", ForeignKey("users.id"), primary_key=True),
+    Column("team_id", ForeignKey("teams.id"), primary_key=True),
 )
 
 

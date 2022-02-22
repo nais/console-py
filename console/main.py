@@ -52,5 +52,5 @@ def main(debug=False):
     return exit_code
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     sys.exit(main(debug=True))

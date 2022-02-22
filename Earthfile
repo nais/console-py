@@ -29,6 +29,7 @@ build:
 
     COPY --dir .prospector.yaml console tests .
     RUN poetry install --no-interaction && \
+        poetry run black --check && \
         poetry run prospector && \
         poetry run pytest
 
@@ -38,6 +39,7 @@ build:
 test:
     LOCALLY
     RUN poetry install --no-interaction && \
+        poetry run black --check && \
         poetry run prospector && \
         poetry run pytest
 
