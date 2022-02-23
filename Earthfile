@@ -43,6 +43,11 @@ test:
         poetry run prospector && \
         poetry run pytest
 
+black:
+    LOCALLY
+    RUN poetry install --no-interaction && \
+        poetry run black .
+
 docker:
     FROM navikt/python:${PY_VERSION}
     ARG EARTHLY_GIT_SHORT_HASH
