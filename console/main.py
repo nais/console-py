@@ -8,7 +8,7 @@ import uvicorn
 from fastapi import FastAPI
 from fiaas_logging import init_logging
 
-from console import api
+from console import api, gql
 from console.settings import Settings
 
 LOG = logging.getLogger(__name__)
@@ -16,6 +16,7 @@ LOG = logging.getLogger(__name__)
 
 app = FastAPI(title="NAIS management console")
 app.include_router(api.router, prefix="/api")
+app.include_router(gql.graphql_app, prefix="/graphql")
 
 
 class ExitOnSignal(Exception):
