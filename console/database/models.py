@@ -1,5 +1,6 @@
 import datetime
 import uuid
+from typing import Set
 
 from sqlalchemy import Column, DateTime, ForeignKey, Table, Text, inspect
 from sqlalchemy.dialects.postgresql import UUID
@@ -46,7 +47,7 @@ class Common:
         return relationship("User", primaryjoin=lambda: User.id == cls.deleted_by_id)
 
     @classmethod
-    def fields(cls):
+    def fields(cls) -> Set[str]:
         mapper = inspect(cls)
         return {c.name for c in mapper.columns}
 
