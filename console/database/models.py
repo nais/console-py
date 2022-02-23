@@ -1,7 +1,7 @@
 import datetime
 import uuid
 
-from sqlalchemy import Column, DateTime, ForeignKey, Table, Text
+from sqlalchemy import Column, DateTime, ForeignKey, Table, Text, inspect
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import declarative_mixin, declared_attr, relationship
 
@@ -44,6 +44,11 @@ class Common:
     @declared_attr
     def deleted_by(cls):
         return relationship("User", primaryjoin=lambda: User.id == cls.deleted_by_id)
+
+    @classmethod
+    def fields(cls):
+        mapper = inspect(cls)
+        return {c.name for c in mapper.columns}
 
 
 user_team = Table(
