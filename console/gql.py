@@ -23,10 +23,19 @@ def convert(instance, cls):
     target_fields = cls.fields()
     source_fields = instance.fields()
     data = {
-        k: getattr(instance, k)
-        for k in source_fields
-        if k in target_fields
-        and not (getattr(instance, k) is None and issubclass(cls, models.Common))
+        f: getattr(instance, f)
+        for f in source_fields
+        if f in target_fields
+        and not (
+            any(
+                issubclass(cls, _class)
+                for _class in (
+                    # List all "base" db classes used
+                    models.Common,
+                )
+            )
+            and getattr(instance, f) is None
+        )
     }
     return cls(**data)
 
