@@ -18,12 +18,14 @@ router = APIRouter(
     response_model=List[schemas.Team],
 )
 def get_teams(db: Session = Depends(get_db)):
+    """List all teams"""
     return db.query(models.Team).all()
 
 
 @router.post(
     "/",
     response_model=schemas.Team,
+    name="Create team",
 )
 def post_team(team: schemas.Team, db: Session = Depends(get_db)):
     db_team = models.Team(**team.dict())
@@ -33,10 +35,7 @@ def post_team(team: schemas.Team, db: Session = Depends(get_db)):
     return db_team
 
 
-@router.put(
-    "/{id}",
-    response_model=schemas.Team,
-)
+@router.put("/{id}", response_model=schemas.Team, name="Update team")
 def put_team(id: uuid.UUID, team: schemas.Team, db: Session = Depends(get_db)):
     db_team: models.Team = db.query(models.Team).filter(models.Team.id == id).first()
     if db_team is None:
