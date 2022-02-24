@@ -32,16 +32,16 @@ def convert(db_obj: models.Base, cls: Type[MappingHelper]) -> MappingHelper:
 
 @strawberry.input
 class TeamInput(MappingHelper):
-    slug: str = NOTSET
-    name: str = NOTSET
+    slug: str
+    name: str
     purpose: Optional[str] = NOTSET
 
 
 @strawberry.type
 class TeamOutput(MappingHelper):
-    slug: str = NOTSET
-    name: str = NOTSET
-    purpose: Optional[str] = NOTSET
+    slug: str
+    name: str
+    purpose: Optional[str]
 
 
 @strawberry.type
