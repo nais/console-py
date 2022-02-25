@@ -1,5 +1,6 @@
+import datetime
 import uuid
-from typing import Optional, Set, Type
+from typing import Optional, Set, Type, List
 
 import strawberry
 from fastapi import Depends
@@ -39,6 +40,13 @@ class TeamInput(MappingHelper):
 
 @strawberry.type
 class TeamOutput(MappingHelper):
+    id: uuid.UUID
+    created_at: Optional[datetime.datetime]
+    updated_at: Optional[datetime.datetime]
+    deleted_at: Optional[datetime.datetime]
+    created_by_id: Optional[uuid.UUID]
+    updated_by_id: Optional[uuid.UUID]
+    deleted_by_id: Optional[uuid.UUID]
     slug: str
     name: str
     purpose: Optional[str]
@@ -47,10 +55,19 @@ class TeamOutput(MappingHelper):
 @strawberry.type
 class Query:
     @strawberry.field
-    def get_team(self, id: uuid.UUID, info: Info) -> TeamOutput:
+    def get_team(self, id: uuid.UUID, info: Info) -> Optional[TeamOutput]:
         db = info.context["db"]
         db_team = crud.team.get(db, id)
+        if db_team is None:
+            # TODO: Do error handling
+            return None
         return convert(db_team, TeamOutput)
+
+    @strawberry.field
+    def get_teams(self, info: Info) -> List[TeamOutput]:
+        db = info.context["db"]
+        db_teams = crud.team.get_multi(db)
+        return [convert(db_team, TeamOutput) for db_team in db_teams]
 
 
 @strawberry.type(description="Mutate teams")
