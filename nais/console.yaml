@@ -28,6 +28,8 @@ spec:
       value: 0.0.0.0
     - name: CONSOLE_PORT
       value: "3000"
+    - name: CONSOLE_MODE
+      value: Release
   port: 3000
   replicas:
     max: 1

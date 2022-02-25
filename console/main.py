@@ -9,7 +9,7 @@ from fastapi import FastAPI
 from fiaas_logging import init_logging
 
 from console import api, gql
-from console.settings import Settings
+from console.core.config import settings
 
 LOG = logging.getLogger(__name__)
 
@@ -23,8 +23,7 @@ class ExitOnSignal(Exception):
     pass
 
 
-def main(debug=False):
-    settings = Settings(debug=debug)
+def main():
     _init_logging(settings.debug)
     exit_code = 0
     for sig in (signal.SIGTERM, signal.SIGINT):
@@ -60,4 +59,4 @@ def _init_logging(debug):
 
 
 if __name__ == "__main__":
-    sys.exit(main(debug=True))
+    sys.exit(main())
