@@ -8,8 +8,7 @@ Base = declarative_base()
 
 
 def init():
-    dsn = settings.database_url.replace("postgres:", "postgresql:", 1)
-    engine = create_engine(dsn)
+    engine = create_engine(settings.database_url)
 
     from . import models  # NOQA
 

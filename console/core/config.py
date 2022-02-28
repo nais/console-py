@@ -1,6 +1,6 @@
 from enum import Enum
 
-from pydantic import BaseSettings, PostgresDsn
+from pydantic import BaseSettings, PostgresDsn, validator
 
 
 class Mode(str, Enum):
@@ -23,6 +23,10 @@ class Settings(BaseSettings):
     @property
     def debug(self):
         return self.mode == Mode.DEBUG
+
+    @validator("database_url")
+    def fix_postgres_scheme(cls, v):
+        return v.replace("postgres:", "postgresql:", 1)
 
 
 settings = Settings()
