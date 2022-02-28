@@ -1,8 +1,8 @@
-from console.database import SessionLocal
+from console.database import get_session
 
 
 def get_db():
-    db = SessionLocal()
+    db = get_session()
     try:
         yield db
     finally:

@@ -27,12 +27,13 @@ build:
 
     RUN poetry install --no-root --no-interaction
 
-    COPY --dir .prospector.yaml console tests .
+    COPY --dir .prospector.yaml console tests alembic .
     RUN poetry install --no-interaction && \
         poetry run black --check . && \
         poetry run prospector && \
         poetry run pytest
 
+    SAVE ARTIFACT alembic
     SAVE ARTIFACT console
     SAVE IMAGE --cache-hint
 
@@ -56,6 +57,7 @@ docker:
     WORKDIR /app
 
     COPY --dir +deps/.venv .
+    COPY --dir +build/alembic .
     COPY --dir +build/console .
 
     ENV PATH="/bin:/usr/bin:/usr/local/bin:/app/.venv/bin"
