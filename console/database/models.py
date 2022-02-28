@@ -71,3 +71,9 @@ class User(Common, Base):
     email = Column(Text, unique=True)
     name = Column(Text, nullable=False)
     teams = relationship("Team", secondary=user_team, back_populates="users")
+
+
+class ApiKey(Common, Base):
+    api_key = Column(Text, unique=True, nullable=False)
+    user_id = Column(UUID, ForeignKey("users.id"), unique=True, nullable=False)
+    user = relationship("User", uselist=False, foreign_keys="ApiKey.user_id")

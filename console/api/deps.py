@@ -7,3 +7,7 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+# Trigger database init on import
+_ = get_session()
