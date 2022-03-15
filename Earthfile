@@ -64,5 +64,4 @@ docker:
 
     CMD ["/app/.venv/bin/python", "-m", "console"]
 
-    SAVE IMAGE --push ${BASEIMAGE}:${IMAGE_TAG}
-    SAVE IMAGE --push ${BASEIMAGE}:latest
+    SAVE IMAGE --push ${BASEIMAGE}:${IMAGE_TAG} ${BASEIMAGE}:latest
